@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">ProjectAndroid</string>
     <string name="action_settings">Settings</string>
+    <string name="pick_time_text">You have entered: </string>
+    <string name="pick_date_text">You have entered: </string>
     <string name="pick_time_button">Pick Time</string>
     <string name="pick_date_button">Pick Date</string>
+
 </resources>

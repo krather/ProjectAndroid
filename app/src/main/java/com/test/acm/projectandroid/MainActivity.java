@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showDatePickerDialog(View v) {
-        DialogFragment newDateFragment = new TimePickerFragment();
+        DialogFragment newDateFragment = new DatePickerFragment();
         newDateFragment.show(getSupportFragmentManager(), "datePicker");
     }
     public void showTimePickerDialog(View v) {

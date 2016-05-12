@@ -2,14 +2,16 @@ package com.test.acm.projectandroid;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.text.format.DateFormat;
-import android.view.View;
+import android.text.format.Formatter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 /**
@@ -32,16 +34,24 @@ public class TimePickerFragment extends DialogFragment
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // Do something with the time chosen by the user
-        TextView tv1 = (TextView) getActivity().findViewById(R.id.textView1);
-        int hour = 0;
-        int min = 0;
+        TextView tv1 = (TextView) getActivity().findViewById(R.id.timePickText);
+        String timeQualifier = "AM";
 
-        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentApiVersion > android.os.Build.VERSION_CODES.LOLLIPOP_MR1){
-            tv1.setText("Hour: " + view.getHour() + "Minute: " + view.getMinute());
-        } else {
-            tv1.setText("Hour: " + view.getCurrentHour() + "Minute: " + view.getCurrentMinute());
+        if (hourOfDay >= 12) {
+            hourOfDay -= 12;
+            timeQualifier = "PM";
         }
+        if (hourOfDay == 0) {
+            hourOfDay = 12;
+        }
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("User hour:", hourOfDay);
+        editor.putInt("User minute:",minute);
+        editor.commit();
+        DecimalFormat formatter = new DecimalFormat("00");
+        String s = formatter.format(minute);
+        tv1.setText("You have entered: \n" + hourOfDay + ":" + s + timeQualifier);
     }
 
 
